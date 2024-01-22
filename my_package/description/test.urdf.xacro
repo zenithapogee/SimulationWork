@@ -1,0 +1,188 @@
+<?xml version="1.0"?>
+
+<robot name="mol" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <link name="world">
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+    </inertial>
+    </link>
+    
+    
+   
+
+    <link name="base_link">
+    <visual>
+      <geometry>
+       <mesh filename="file:///home/username/dev_ws/src/my_package/meshes/DOCK3.dae"/>
+      </geometry>
+    </visual>
+    <collision name="base_link_collision">
+      <geometry>
+       <mesh filename="file:///home/username/dev_ws/src/my_package/meshes/DOCK3.dae"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+    </inertial>
+  </link>
+
+
+
+  <joint name="base_link_joint" type="fixed">
+    <origin xyz="0 0 0.1" rpy="0 0 1.5708"/>
+    <parent link="world"/>
+    <child link="base_link"/>
+  </joint>
+
+
+
+  
+    <!-- camera_joint describes where the camera is relative to the arm -->
+    <!-- - Even though the camera isn't moving relative to the arm, it will probably be helpful to have its own link/frame rather than just adding more visuals to the arm -->
+    <!-- - For this example, the camera_link origin will be 0.05m above base (3m tall) Origin =0.05 +3/2-->
+
+    <!-- <joint name="box_joint" type="fixed">
+        <origin xyz="0 -1.47 3.6191" rpy="0 0 -1.5708"/>
+        <parent link="base_link"/>
+        <child link="box_link"/>
+    </joint> -->
+    <joint name="box_joint" type="fixed">
+        <origin xyz="-0.1 -1.36 3.52" rpy="0 0 -1.5708"/>
+        <parent link="base_link"/>
+        <child link="box_link"/>
+    </joint>
+
+    <!-- Box Link -->
+    <link name="box_link">
+        <collision>
+            <origin xyz="0 0 0.1" rpy="1.5708 0 1.5708"/>
+            <geometry>
+                <!-- <box size="0.06 0.15 0.2"/> -->
+                <mesh filename="file:///home/username/dev_ws/src/my_package/meshes/terminal.dae" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="0 0 0.1" rpy="1.5708 0 1.5708"/>
+            <geometry>
+                <!-- <box size="0.06 0.15 0.2"/> -->
+              <mesh filename="file:///home/username/dev_ws/src/my_package/meshes/terminal.dae" scale="0.001 0.001 0.001"/>
+
+            </geometry>
+        </visual>
+
+        <inertial>
+            <origin xyz="0 0 0.1" rpy="0 0 0"/>
+            <mass value="1"/>
+            <inertia
+                ixx="1.0" ixy="0.0" ixz="0.0"
+                iyy="1.0" iyz="0.0"
+                izz="1.0"/>
+        </inertial>
+    </link>
+
+    <joint name="camera_joint" type="fixed">
+        <!-- <origin xyz="0.01 0 0.18" rpy="0 0 0"/> -->
+        <origin xyz="0.11 0.1 0.33" rpy="0 0 0"/>
+        <parent link="box_link"/>
+        <child link="camera_link"/>
+    </joint>
+
+    <link name="camera_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+            <geometry>
+                <cylinder length="0.01" radius="0.01" />
+            </geometry>
+        </visual>
+        <!-- <collision>
+            <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+            <geometry>
+                <cylinder length="0.01" radius="0.01" />
+            </geometry>
+        </collision> -->
+    </link>
+
+
+
+    <gazebo>
+    <static>true</static>
+      <model name='flashlight'>
+       <!-- flashlight x = 1.47 to center of terminal then +0.03  -->
+        <!-- <pose>1.5 -0.05 3.8991 0 -1.5708 0</pose>  -->
+        <pose>1.49 -0.05 3.95 0 -1.5708 0</pose>
+        <link name='light_source'>
+          <pose>0 0 0.0 0 0 0</pose>
+          <inertial>
+            <mass>0.0025</mass>
+            <inertia>
+              <ixx>1.0e-05</ixx>
+              <ixy>0</ixy>
+              <ixz>0</ixz>
+              <iyy>1.0e-05</iyy>
+              <iyz>0</iyz>
+              <izz>1.0e-05</izz>
+            </inertia>
+          </inertial>
+          <light name='lamp' type='spot'>
+            <pose>0 0 0.0 0 0 0</pose>
+            <attenuation>
+              <range>1</range>
+              <linear>0</linear>
+              <constant>0.1</constant>
+              <quadratic>0.01</quadratic>
+            </attenuation>
+            <!-- <diffuse>1 0 0 1</diffuse>
+            <specular>1 0 0 1</specular> -->
+            <diffuse>1 1 1 1</diffuse> <!-- Adjust these values to simulate IR spectrum -->
+            <specular>1 1 1 1</specular>
+            <spot>
+              <inner_angle>1</inner_angle>
+              <outer_angle>1.1</outer_angle>
+              <falloff>1</falloff>
+            </spot>
+            <direction>0 0 -1</direction>
+          </light>
+          <visual name='lamp'>
+            <geometry>
+              <cylinder>
+                <radius>0.019</radius>
+                <length>0.005</length>s
+              </cylinder>
+            </geometry>
+            <transparency>0.8</transparency>
+            <material>
+              <!-- <ambient>1 0.2 0.2 1</ambient>
+              <diffuse>1 0.2 0.2 1</diffuse>
+              <specular>1 1 1 1</specular>
+              <emissive>1 0.2 0.2 1</emissive> -->
+              <ambient>1 1 1 1</ambient>
+              <diffuse>1 1 1 1</diffuse>
+              <specular>1 1 1 1</specular>
+              <emissive>1 1 1 1</emissive>
+            </material>
+          </visual>
+        </link>
+        <plugin name='light_control' filename='libLedPlugin.so'>
+              <enable>true</enable>
+              <light>
+                <id>light_source/lamp</id>
+                <duration>0.5</duration>
+                <interval>0.5</interval>
+              </light>
+        </plugin>
+      </model>
+    </gazebo>
+    <gazebo>
+      <joint name='flashlight_joint' type='fixed'>
+        <parent>world</parent>
+        <child>flashlight::light_source</child>
+      </joint>
+    </gazebo>
+    <xacro:include filename="example_gazebo.xacro" />
+
+
+
+</robot>
