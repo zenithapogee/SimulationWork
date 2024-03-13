@@ -3,12 +3,29 @@
 <package format="3">
   <name>my_package</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="matthew.huang@todo.todo">matthew.huang</maintainer>
-  <license>TODO: License declaration</license>
+  <description>Simulation of installing two terminals on a boat and dock </description>
+  <maintainer email="matthew.huang@gmail.com">matthew.huang</maintainer>
+  <license>License declaration</license>
  
 
   <buildtool_depend>ament_cmake</buildtool_depend>
+  
+  <!-- Camera_sim -->
+  <buildtool_depend>rosidl_default_generators</buildtool_depend>
+  <build_depend>builtin_interfaces</build_depend>
+  <build_depend>rosidl_default_generators</build_depend>
+  <build_depend>tf2</build_depend>
+  <build_depend>tf2_ros</build_depend>
+
+  <!-- FSM Communication -->
+  <depend>ros2_interfaces</depend>
+
+  <exec_depend>builtin_interfaces</exec_depend>
+  <exec_depend>rosidl_default_runtime</exec_depend>
+  <exec_depend>tf2</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  
+  <member_of_group>rosidl_interface_packages</member_of_group>
 
   <depend>gazebo_msgs</depend>
   <depend>rclcpp</depend>
@@ -24,11 +41,7 @@
   <exec_depend>sensor_msgs</exec_depend>
   <exec_depend>cv_bridge</exec_depend>
   <exec_depend>opencv</exec_depend>
-
   <exec_depend>ament_cmake</exec_depend>
-
-
-
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
   <export>

@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<sdf version="1.7">
+    <model name="dock">
+        <static>true</static>
+        <link name="dock_link">
+            <collision name="plane">
+                <pose>-9 -2 3.68 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>33 50 1</size>
+                    </box>
+                </geometry>
+            </collision>
+            <collision name="plane2">
+                <pose>16 -8 3.68 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>17 38.5 1</size>
+                    </box>
+                </geometry>
+            </collision>
+            <collision name="ramp">
+                <pose>16 17 1.85 -0.307 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>17 12.4 1</size>
+                    </box>
+                </geometry>
+            </collision>
+            <collision name="ramp_bottom">
+                <pose>16 17 -2.5 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>17 12 5</size>
+                    </box>
+                </geometry>
+            </collision>
+            <collision name="dock_base">
+                <pose>16.45 24.8 -2.05 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>4.2 3.5 5.0</size>
+                    </box>
+                </geometry>
+            </collision>
+            <collision name="dock_left_dia">
+                <pose>13.95 28.2 -2.05 0 0 0.64</pose>
+                <geometry>
+                    <box>
+                        <size>2.2 6 5.0</size>
+                    </box>
+                </geometry>
+            </collision>
+            <collision name="dock_left">
+                <pose>12.3 34.45 -2.05 0 0 0.0</pose>
+                <geometry>
+                    <box>
+                        <size>2.1 8.9 5.0</size>
+                    </box>
+                </geometry>
+            </collision>
+            <collision name="dock_right_dia">
+                <pose>18.95 28.2 -2.05 0 0 -0.64</pose>
+                <geometry>
+                    <box>
+                        <size>2.2 6 5.0</size>
+                    </box>
+                </geometry>
+            </collision>
+            <collision name="dock_right">
+                <pose>20.6 34.45 -2.05 0 0 0.0</pose>
+                <geometry>
+                    <box>
+                        <size>2.1 8.9 5.0</size>
+                    </box>
+                </geometry>
+            </collision>
+            <!--
+      <collision name="ConcreteWall_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>meshes/dock.dae</uri>
+            <submesh>
+              <name>ConcreteWall</name>
+              <center>false</center>
+            </submesh>
+          </mesh>
+        </geometry>
+      </collision>
+      -->
+            <visual name="ConcreteWall_visual">
+                <geometry>
+                    <mesh>
+                        <uri>file:///Users/matthew.huang/dev_ws/src/my_package/models/dock/6/meshes/dock.dae</uri>
+                        <submesh>
+                            <name>ConcreteWall</name>
+                            <center>false</center>
+                        </submesh>
+                    </mesh>
+                </geometry>
+                <material>
+                    <diffuse>1.0 1.0 1.0</diffuse>
+                    <specular>1.0 1.0 1.0</specular>
+                    <pbr>
+                        <metal>
+                            <albedo_map>materials/textures/ConcreteWall_Albedo.jpg</albedo_map>
+                            <normal_map>materials/textures/ConcreteWall_Normal.jpg</normal_map>
+                            <roughness_map>materials/textures/ConcreteWall_Roughness.jpg</roughness_map>
+                        </metal>
+                    </pbr>
+                </material>
+            </visual>
+            <visual name="Runway_visual">
+                <geometry>
+                    <mesh>
+                        <uri>file:///Users/matthew.huang/dev_ws/src/my_package/models/dock/6/meshes/dock.dae</uri>
+                        <submesh>
+                            <name>Runway</name>
+                            <center>false</center>
+                        </submesh>
+                    </mesh>
+                </geometry>
+                <material>
+                    <diffuse>1.0 1.0 1.0</diffuse>
+                    <specular>1.0 1.0 1.0</specular>
+                    <pbr>
+                        <metal>
+                            <albedo_map>materials/textures/Runway_Albedo.jpg</albedo_map>
+                            <normal_map>materials/textures/Runway_Normal.jpg</normal_map>
+                            <roughness_map>materials/textures/Runway_Roughness.jpg</roughness_map>
+                        </metal>
+                    </pbr>
+                </material>
+            </visual>
+            <visual name="Concrete_visual">
+                <geometry>
+                    <mesh>
+                        <uri>file:///Users/matthew.huang/dev_ws/src/my_package/models/dock/6/meshes/dock.dae</uri>
+                        <submesh>
+                            <name>Concrete</name>
+                            <center>false</center>
+                        </submesh>
+                    </mesh>
+                </geometry>
+                <material>
+                    <diffuse>1.0 1.0 1.0</diffuse>
+                    <specular>1.0 1.0 1.0</specular>
+                    <pbr>
+                        <metal>
+                            <albedo_map>materials/textures/Concrete_Albedo.jpg</albedo_map>
+                            <normal_map>materials/textures/Concrete_Normal.jpg</normal_map>
+                            <roughness_map>materials/textures/Concrete_Roughness.jpg</roughness_map>
+                        </metal>
+                    </pbr>
+                </material>
+            </visual>
+        </link>
+    </model>
+</sdf>

@@ -1,0 +1,7 @@
+int32 points_per_axis 10
+float32[2] center
+float32 grid_length 2.0
+int32 averaging 1
+float32 threshold 1.0
+---
+float32[2] max

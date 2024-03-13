@@ -1,0 +1,4 @@
+int32[4] pos
+bool smooth_rotation 
+---
+bool success

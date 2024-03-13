@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Fixed joint connecting camera to optical link(screen)-->
+    <joint name="camera_optical_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="-1.571 0 -1.571" />
+        <parent link="camera_link" />
+        <child link="camera_link_optical" />
+    </joint>
+    
+    <!-- Camera link optical (screen) -->
+    <link name="camera_link_optical"></link>
+
+    <gazebo reference="camera_link">
+        
+        <!-- Camera configuration -->
+        <sensor type="camera" name="camera_1">
+            <update_rate>30</update_rate>
+            <visualize>1</visualize>
+            <camera name='cam'>
+            <horizontal_fov>1.085</horizontal_fov>
+            <image>
+                <width>3200</width>
+                <height>2400</height>
+                <format>L_INT8</format>
+            </image>
+            <clip>
+                <near>0.02</near>
+                <far>300</far>
+            </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0</mean>
+            <stddev>0.007</stddev>
+          </noise>
+        </camera>
+          
+            <!-- Camera plugin -->
+            <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+            <robotNamespace>robot_1_camera</robotNamespace>
+                <frame_name>camera_link_optical</frame_name>
+                <min_depth>0.1</min_depth>
+                <max_depth>500</max_depth>
+            </plugin>
+
+            <!-- Plugin for configuring camera -->
+            <plugin name="cam_sim_1" filename="libIRGCameraSimSensorPlugin.so">
+            <exposure>0.5</exposure>
+            </plugin>
+        </sensor>
+    </gazebo>
+</robot>

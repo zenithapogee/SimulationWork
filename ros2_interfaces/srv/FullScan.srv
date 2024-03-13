@@ -1,0 +1,7 @@
+string scan_scheme
+int32[] scheme_params
+float32[2] center
+float32 grid_length 2.0
+int32 averaging 1
+---
+ros2_interfaces/PointAugmented[] grid

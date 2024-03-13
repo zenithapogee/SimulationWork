@@ -1,0 +1,236 @@
+<?xml version="1.0"?>
+
+<robot name="mol" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <link name="world">
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+    </inertial>
+    </link>
+
+    <!-- Link for the dock -->
+    <link name="base_link">
+    <visual>
+      <geometry>
+       <mesh filename="file:///home/username/dev_ws/src/my_package/meshes/DOCK4.dae"/>
+      </geometry>
+    </visual>
+    <collision name="base_link_collision">
+      <geometry>
+       <mesh filename="file:///home/username/dev_ws/src/my_package/meshes/DOCK4.dae"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+    </inertial>
+  </link>
+
+  <!-- Fixed joint connecting dock and world -->
+  <joint name="base_link_joint" type="fixed">
+    <origin xyz="0 0 0.1" rpy="0 0 1.5708"/>
+    <parent link="world"/>
+    <child link="base_link"/>
+  </joint>
+
+  <!-- Fixed joint connecting terminal and dock-->
+    <joint name="box_joint" type="fixed">
+        <origin xyz="-0.1 -1.36 3.52" rpy="0 0 -1.5708"/>
+        <parent link="base_link"/>
+        <child link="box_link"/>
+    </joint>
+
+    <!-- Terminal Link -->
+    <link name="box_link">
+        <collision>
+            <origin xyz="0 0 0.1" rpy="1.5708 0 1.5708"/>
+            <geometry>
+                <mesh filename="file:///home/username/dev_ws/src/my_package/meshes/terminal.dae" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="0 0 0.1" rpy="1.5708 0 1.5708"/>
+            <geometry>
+              <mesh filename="file:///home/username/dev_ws/src/my_package/meshes/terminal.dae" scale="0.001 0.001 0.001"/>
+
+            </geometry>
+        </visual>
+
+        <inertial>
+            <origin xyz="0 0 0.1" rpy="0 0 0"/>
+            <mass value="1"/>
+            <inertia
+                ixx="1.0" ixy="0.0" ixz="0.0"
+                iyy="1.0" iyz="0.0"
+                izz="1.0"/>
+        </inertial>
+    </link>
+
+    <!-- Fixed joint connecting camera and terminal-->
+    <joint name="camera_joint" type="fixed">
+        <origin xyz="0.11 0.1 0.33" rpy="0 0 0"/>
+        <parent link="box_link"/>
+        <child link="camera_link"/>
+    </joint>
+
+  <!-- Camera Link -->
+    <link name="camera_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+            <geometry>
+                <cylinder length="0.01" radius="0.01" />
+            </geometry>
+        </visual>
+    </link>
+
+<gazebo>
+    <static>true</static>
+    <!-- Laser description -->
+      <model name='laser'>
+        <pose>1.45 0.05 3.95 0 -1.5708 0</pose>
+        <!-- Laser link -->
+        <link name='laser_link'>
+        <gravity>false</gravity> 
+          <pose>0 0 0.0 0 -1.5708 0</pose>
+          <inertial>
+            <mass>0.0025</mass>
+            <inertia>
+              <ixx>1.0e-05</ixx>
+              <ixy>0</ixy>
+              <ixz>0</ixz>
+              <iyy>1.0e-05</iyy>
+              <iyz>0</iyz>
+              <izz>1.0e-05</izz>
+            </inertia>
+          </inertial>
+          
+          <!-- Laser visual -->
+          <visual name='laser_visual'>
+            <geometry>
+              <cylinder>
+                <radius>0.0075</radius>
+                <length>0.005</length>
+              </cylinder>
+            </geometry>
+        
+            <material>
+              <ambient>1 0.2 0.2 1</ambient>
+              <diffuse>1 0.2 0.2 1</diffuse>
+              <specular>1 1 1 1</specular>
+              <emissive>1 0.2 0.2 1</emissive>
+            </material>
+          </visual>
+
+          <!-- Plugin for projecting red point to simulate laser-->
+          <projector name="projector1">
+            <pose>0 0 0 0 0 1.5708</pose>
+            <!-- Added the custom laser point.png texture to the gazebo texture path: /usr/share/gazebo-11/media/materials/textures -->
+            <texture>point.png</texture> 
+            <fov>0.07</fov>
+            <near_clip>1</near_clip>
+            <far_clip> 10</far_clip>
+            </projector>
+        </link>
+
+        <!-- Projection plugin -->
+        <plugin name="projector1" filename="libgazebo_ros_projector.so">
+         <projector>projector1</projector>
+         <alwaysOn>true</alwaysOn>
+         <updateRate>10.0</updateRate>
+         <textureName></textureName>
+         <filterTextureName></filterTextureName>
+         <textureTopicName>/projector1/image</textureTopicName>
+         <projectorTopicName>/projector1/projector</projectorTopicName>
+      </plugin>
+
+      <!-- Plugin for real-time orientation of laser according to commands/fsm_command-->
+      <plugin name="LaserPlugin" filename="libLaserPlugin.so"/>
+      </model>
+    </gazebo>
+
+    <gazebo>
+      <!-- Joint connecting laser to world -->
+      <joint name='laser_joint' type='continuous'>
+        <parent>world</parent>
+        <child>laser::laser_link</child>
+        <axis>
+        <xyz>1 0 0</xyz>
+        </axis>
+      </joint>
+    </gazebo>
+
+
+    <gazebo>
+    <static>true</static>
+      <!-- Beacon description -->
+      <model name='flashlight'>
+        <pose>1.49 -0.05 3.95 0 -1.5708 0</pose>
+        <link name='light_source'>
+          <pose>0 0 0.0 0 0 0</pose>
+          <inertial>
+            <mass>0.0025</mass>
+            <inertia>
+              <ixx>1.0e-05</ixx>
+              <ixy>0</ixy>
+              <ixz>0</ixz>
+              <iyy>1.0e-05</iyy>
+              <iyz>0</iyz>
+              <izz>1.0e-05</izz>
+            </inertia>
+          </inertial>
+          <!-- Light configuration for beacon -->
+          <light name='lamp' type='spot'>
+            <pose>0 0 0.0 0 0 0</pose>
+            <attenuation>
+              <range>1</range>
+              <linear>0</linear>
+              <constant>0.1</constant>
+              <quadratic>0.01</quadratic>
+            </attenuation>
+            <diffuse>1 1 1 1</diffuse> 
+            <specular>1 1 1 1</specular>
+            <spot>
+              <inner_angle>1</inner_angle>
+              <outer_angle>1.1</outer_angle>
+              <falloff>1</falloff>
+            </spot>
+            <direction>0 0 -1</direction>
+          </light>
+          <visual name='lamp'>
+            <geometry>
+              <cylinder>
+                <radius>0.019</radius>
+                <length>0.005</length>s
+              </cylinder>
+            </geometry>
+            <transparency>0.8</transparency>
+            <material>
+              <ambient>1 1 1 1</ambient>
+              <diffuse>1 1 1 1</diffuse>
+              <specular>1 1 1 1</specular>
+              <emissive>1 1 1 1</emissive>
+            </material>
+          </visual>
+        </link>
+        <!-- Plugin for controlling blinking -->
+        <plugin name='light_control' filename='libLedPlugin.so'>
+              <enable>true</enable>
+              <light>
+                <id>light_source/lamp</id>
+                <duration>0.5</duration>
+                <interval>0.5</interval>
+              </light>
+        </plugin>
+      </model>
+    </gazebo>
+    <gazebo>
+          
+      <!-- Fixed joint connecting light to world -->
+      <joint name='flashlight_joint' type='fixed'>
+        <parent>world</parent>
+        <child>flashlight::light_source</child>
+      </joint>
+    </gazebo>
+    <xacro:include filename="camera_gazebo.xacro" />
+</robot>
