@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(my_package)
+project(simulation)
 
 # Add support for C++17
 if(NOT CMAKE_CXX_STANDARD)

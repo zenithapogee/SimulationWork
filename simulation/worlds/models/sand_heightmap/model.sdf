@@ -21,7 +21,7 @@
       <collision name="ground">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
-          <mesh><uri>file:///home/username/dev_ws/src/my_package/worlds/models/sand_heightmap/meshes/heightmap.dae</uri></mesh>
+          <mesh><uri>file:///home/username/dev_ws/src/simulation/worlds/models/sand_heightmap/meshes/heightmap.dae</uri></mesh>
         </geometry>
       </collision>
 
@@ -29,11 +29,11 @@
         <cast_shadows>true</cast_shadows>
         <pose>0 0 0 0 0 0</pose>
         <geometry>
-          <mesh><uri>file:///home/username/dev_ws/src/my_package/worlds/models/sand_heightmap/meshes/heightmap.dae</uri></mesh>
+          <mesh><uri>file:///home/username/dev_ws/src/simulation/worlds/models/sand_heightmap/meshes/heightmap.dae</uri></mesh>
         </geometry>
         <material>
           <script>
-            <uri>file:///home/username/dev_ws/src/my_package/worlds/Media/materials/scripts/sand.material</uri>
+            <uri>file:///home/username/dev_ws/src/simulation/worlds/Media/materials/scripts/sand.material</uri>
             <name>UUVSimulator/SandAndStones</name>
           </script>
           <emissive>

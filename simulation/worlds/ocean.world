@@ -47,13 +47,13 @@
 
     <!-- Bounding box with sea surface -->
     <include>
-      <uri>model:///home/username/dev_ws/src/my_package/worlds/models/ocean</uri>
+      <uri>model:///home/username/dev_ws/src/simulation/worlds/models/ocean</uri>
       <pose>0 0 -0.25 0 0 0</pose>
     </include>
 
     <!-- Sand Heightmap -->
     <include>
-      <uri>model:///home/username/dev_ws/src/my_package/worlds/models/sand_heightmap</uri>
+      <uri>model:///home/username/dev_ws/src/simulation/worlds/models/sand_heightmap</uri>
       <pose>0 0 -95 0 0 0</pose>
     </include>
 
@@ -65,14 +65,14 @@
       <visual name="visual">
         <geometry>
           <mesh>
-            <uri>file:///home/username/dev_ws/src/my_package/models/marina/meshes/terrain.dae</uri>
+            <uri>file:///home/username/dev_ws/src/simulation/models/marina/meshes/terrain.dae</uri>
           </mesh>
         </geometry>
       </visual>
       <collision name="collision">
         <geometry>
           <mesh>
-            <uri>file:///home/username/dev_ws/src/my_package/models/marina/meshes/terrain.dae</uri>
+            <uri>file:///home/username/dev_ws/src/simulation/models/marina/meshes/terrain.dae</uri>
           </mesh>
         </geometry>
       </collision>
@@ -171,7 +171,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/username/dev_ws/src/my_package/models/robot2/meshes/Boat05.dae</uri>
+            <uri>file:///home/username/dev_ws/src/simulation/models/robot2/meshes/Boat05.dae</uri>
           </mesh>
         </geometry>
       </collision>
@@ -205,7 +205,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/username/dev_ws/src/my_package/models/robot2/meshes/Boat05.dae</uri>
+            <uri>file:///home/username/dev_ws/src/simulation/models/robot2/meshes/Boat05.dae</uri>
           </mesh>
         </geometry>
       </visual>
@@ -214,7 +214,7 @@
         <geometry>
           <mesh>
             <scale>0.001 0.001 0.001</scale>
-            <uri>file:///home/username/dev_ws/src/my_package/meshes/terminal.dae</uri>
+            <uri>file:///home/username/dev_ws/src/simulation/meshes/terminal.dae</uri>
           </mesh>
         </geometry>
       </visual>

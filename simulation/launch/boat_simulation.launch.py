@@ -13,7 +13,7 @@ import xacro
 def generate_launch_description():
 
     # Specify the name of the package and path to xacro file within the package
-    pkg_name = 'my_package'
+    pkg_name = 'simulation'
     file_subpath = 'description/dock.urdf.xacro'
 
     # Use xacro to process the file of robot_1 (pier)
@@ -58,7 +58,7 @@ def generate_launch_description():
 
     #  Start image pipeline node for camera 1. Arguments: topic, center_offset_x,center_offset_y
     listener_node_1 = Node(
-        package="my_package",
+        package="simulation",
         executable="image_listener.py",
         # namespace="robot_1",
         output="screen",
